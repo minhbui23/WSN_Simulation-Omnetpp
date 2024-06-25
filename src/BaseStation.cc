@@ -1,5 +1,6 @@
 #include "BaseStation.h"
 
+// Register this module with OMNeT++'s simulation kernel
 Define_Module(BaseStation);
 
 void BaseStation::initialize()
@@ -24,13 +25,14 @@ bool BaseStation::isPacketInQueue(int nodeId, int packetVersion)
 void BaseStation::addPacketToQueue(int nodeId, int packetVersion)
 {
     if (packetQueue.size() >= queueSize) {
-        packetQueue.pop_front(); // Remove the oldest entry if the queue is full
+        packetQueue.pop_front();
     }
     packetQueue.push_back(std::make_pair(nodeId, packetVersion));
 }
 
 void BaseStation::handleMessage(cMessage *msg)
 {
+    // Handle received packets from SensorNodes
     cPacket *receivedPkt = dynamic_cast<cPacket*>(msg);
     if (receivedPkt) {
         int nodeId = receivedPkt->par("sourceNodeId").longValue();
@@ -44,6 +46,8 @@ void BaseStation::handleMessage(cMessage *msg)
             addPacketToQueue(nodeId, packetVersion);
         }
     }
+
+    //Process the data, send to the server or do something...
 
     delete msg;
 }
