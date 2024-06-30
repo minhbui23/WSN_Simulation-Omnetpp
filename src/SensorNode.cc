@@ -143,7 +143,7 @@ std::vector<const char*> SensorNode::Scan()
 }
 
 
-//dsdsdsdsd
+
 // Main message handling function
 void SensorNode::handleMessage(cMessage *msg)
 {
